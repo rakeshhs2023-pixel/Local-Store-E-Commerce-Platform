@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shoe Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">&#128095; Shoe Store</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        &#128722;
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+                <li id="user-info"></li>
+                <li><button onclick="clearAllData()" class="btn-clear">🗑 Clear Data</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <h1>Step Into Nike And Puma Favorites</h1>
+        <p>Shop running shoes, sneakers, casual pairs, basketball styles, and formal shoes from Nike and Puma.</p>
+    </div>
+
+    <div class="container">
+        <div class="search-filter">
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Search Nike and Puma shoes..."
+                    oninput="searchProducts(this.value)">
+            </div>
+            <div class="filters">
+                <select onchange="filterByCategory(this.value)">
+                    <option value="all">All Shoe Categories</option>
+                    <option value="Running">Running</option>
+                    <option value="Casual">Casual</option>
+                    <option value="Basketball">Basketball</option>
+                    <option value="Formal">Formal</option>
+                    <option value="Sneakers">Sneakers</option>
+                </select>
+                <select onchange="sortProducts(this.value)">
+                    <option value="">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Highest Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="products-grid" id="products-container"></div>
+    </div>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+    <script>
+        renderProducts();
+
+        function clearAllData() {
+            if (confirm('Clear all users, cart, and orders?')) {
+                localStorage.clear();
+                alert('All data cleared!');
+                location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

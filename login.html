@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Local Store</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">🛒 Local Store</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="orders.html">Orders</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li>
+                    <a href="cart.html" class="cart-icon">
+                        🛒
+                        <span class="cart-count">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <h1 id="form-title">Login</h1>
+
+        <form id="login-form">
+            <div class="form-group" id="name-group" style="display: none;">
+                <label for="name">Full Name</label>
+                <input type="text" id="name">
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%;" id="submit-btn">
+                Login
+            </button>
+        </form>
+
+        <div class="auth-toggle">
+            <p id="toggle-text">Don't have an account? <a href="#" id="toggle-link">Register</a></p>
+        </div>
+    </div>
+
+    <script src="products.js"></script>
+    <script src="script.js"></script>
+    <script>
+        let isLogin = true;
+
+        const form = document.getElementById('login-form');
+        const formTitle = document.getElementById('form-title');
+        const nameGroup = document.getElementById('name-group');
+        const submitBtn = document.getElementById('submit-btn');
+        const toggleText = document.getElementById('toggle-text');
+
+        function switchMode(loginMode) {
+            isLogin = loginMode;
+            if (isLogin) {
+                formTitle.textContent = 'Login';
+                submitBtn.textContent = 'Login';
+                nameGroup.style.display = 'none';
+                document.getElementById('name').removeAttribute('required');
+                toggleText.innerHTML = 'Don\'t have an account? <a href="#" id="toggle-link">Register</a>';
+            } else {
+                formTitle.textContent = 'Register';
+                submitBtn.textContent = 'Register';
+                nameGroup.style.display = 'block';
+                document.getElementById('name').setAttribute('required', 'required');
+                toggleText.innerHTML = 'Already have an account? <a href="#" id="toggle-link">Login</a>';
+            }
+            // Re-attach toggle listener after innerHTML update
+            document.getElementById('toggle-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                switchMode(!isLogin);
+            });
+        }
+
+        // Initial toggle listener
+        document.getElementById('toggle-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            switchMode(!isLogin);
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (isLogin) {
+                if (login(email, password)) {
+                    showNotification('Login successful!');
+                    setTimeout(() => window.location.href = 'index.html', 1000);
+                } else {
+                    alert('Invalid email or password');
+                }
+            } else {
+                const name = document.getElementById('name').value;
+                if (register(name, email, password)) {
+                    showNotification('Registration successful! Please login.');
+                    form.reset();
+                    switchMode(true);
+                } else {
+                    alert('Email already exists');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

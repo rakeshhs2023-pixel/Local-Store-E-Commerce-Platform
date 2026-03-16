@@ -1,0 +1,9 @@
+{
+  "name": "local-store-e-commerce-platform",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "powershell -NoLogo -NoProfile -Command \"Write-Host 'Open in browser: http://127.0.0.1:8000/index.html'; python -m http.server 8000\"",
+    "start": "powershell -NoLogo -NoProfile -Command \"Write-Host 'Open in browser: http://127.0.0.1:8000/index.html'; python -m http.server 8000\""
+  }
+}
